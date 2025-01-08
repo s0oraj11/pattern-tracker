@@ -18,29 +18,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll() // allow public access to non-api endpoints
+                    .requestMatchers("/api/**").authenticated()
+                    .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                .defaultSuccessUrl("/api/patterns", true)
-                );
-
-        return http.build();
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Add this line
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
-                )
-                .oauth2Login(oauth2 -> oauth2
-                .defaultSuccessUrl("/api/patterns", true)
+                    .defaultSuccessUrl("/api/patterns", true)
                 );
 
         return http.build();
