@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -25,7 +24,14 @@ public class SecurityConfig {
                     .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                    .defaultSuccessUrl("/api/patterns", true)
+                    .defaultSuccessUrl("https://acip.vercel.app", true)
+                )
+                .logout(logout -> logout
+                    .logoutUrl("/api/logout")
+                    .logoutSuccessUrl("https://acip.vercel.app")
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .permitAll()
                 );
 
         return http.build();
@@ -38,7 +44,8 @@ public class SecurityConfig {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
-
+        configuration.setExposedHeaders(Arrays.asList("Set-Cookie"));
+        
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
