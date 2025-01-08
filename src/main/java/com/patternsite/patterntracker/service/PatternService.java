@@ -1,5 +1,6 @@
 package com.patternsite.patterntracker.service;
 
+
 import com.patternsite.patterntracker.model.Pattern;
 import com.patternsite.patterntracker.repository.PatternRepository;
 import org.springframework.beans.factory.annotation.Autowired;
