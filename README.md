@@ -3,6 +3,8 @@
 Pattern Tracker is a Java-based web application designed to help developers track their progress through advanced coding interview questions. 
 Users can mark questions as completed or uncompleted, helping them organize their interview preparation journey.
 
+
+
 ## System Architecture
 
 ```mermaid
